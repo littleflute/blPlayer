@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>blPlayer</title>
+</head>
+
+<body>  
+
+	<script>
+		function blPlayer()
+		{
+			this.myBtn	= function(b)
+			{
+				var btn = document.getElementById("btnBlPlayer");
+				if(!btn)
+				{
+					btn = document.createElement("button");
+					btn.id = "btnBlPlayer";
+					btn.innerHTML = "+";
+					document.body.appendChild(btn);
+				}
+				if(b)
+				{
+					btn.style.display = "block";
+					btn.style.border = "1px blue solid";
+				}
+				else
+				{
+				}
+
+				btn.boss = this;
+				btn.boss.bShowView = false;
+				this.myView(btn.boss.bShowView);
+
+				btn.onclick = function()
+				{
+					var boss = btn.boss;
+					boss.bShowView = !boss.bShowView;
+					var v = boss.myView(boss.bShowView);
+					btn.showObj2Div(v,boss);
+						
+					btn.innerHTML = boss.bShowView?"-":"+";
+				}
+				
+				btn.onBtnTest		= function(o)
+				{
+    				var id = "x" + o.parentElement.id;
+      				var x = document.getElementById(id);
+    				if(x.style.display == "none")
+    				{
+    					x.style.display = "block";
+        				o.innerHTML = "-";
+       					o.style.color = "red";
+    				}
+    				else
+    				{
+    					x.style.display = "none";
+        				o.innerHTML = "+";
+        				o.style.color = "green";
+    				}
+				},
+				btn.bShowMe		= false;
+	
+
+				btn.showObj2Div = function(oDiv,obj)
+				{
+					if(btn.boss.bShowView==false)
+					{
+						oDiv.innerHTML = "";
+						return;
+					}
+					var nID = 0;
+					for(x in obj)
+					{
+						nID++;
+						var d = document.createElement("div");
+						d.id = nID;
+						d.onFun = btn.onBtnTest;
+						d.innerHTML = x;
+						var bt= "<"
+						bt += "button onclick='this.parentElement.onFun(this)'>";
+						bt += "-</button>";
+						d.innerHTML += bt;
+						d.style.border = "solid 1px blue";
+						d.style.color = "red";
+						oDiv.appendChild(d); 
+
+						var v = document.createElement("div");
+						v.id = "x" + nID;
+					 	v.innerHTML = obj[x];
+						v.style.border = "solid 1px red";
+						v.style.color = "green"; 
+						oDiv.appendChild(v); 
+					}
+				}
+			}
+			this.myView	= function(b)
+			{
+				var v = document.getElementById("divBlPlayerView");
+				if(!v)
+				{
+					v = document.createElement("div"); 
+					v.id = "divBlPlayerView";
+					document.body.appendChild(v);
+				}
+				if(b)
+				{
+					v.style.display = "block";
+					v.style.border = "1px green solid";
+				}
+				else
+				{
+					v.style.display = "none";
+				}
+				return v;
+			}
+			this.show = function()
+			{
+				this.myBtn(true); 
+			}
+			this.v = "v0.0.1";
+			this.show();
+		}
+		var p1 = new blPlayer();
+
+	</script>
+ 
+</body>
+</html>
